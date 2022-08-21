@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+
+<body>
+    <div id="app">
+        <section v-show="allow_to_show.length">
+            <h1>{{ title }}</h1>
+            <ul>
+                <li v-for="item in allow_to_show" :key="item.id">
+                    <span>{{ item.id }}</span>&ensp;&ensp;
+                    <span>{{ item.name }}</span>&ensp;&ensp;
+                    <span><a :href="item.url">点击此处跳转</a></span>&ensp;&ensp;
+                    <span>地址：{{ item.url }}</span>&ensp;&ensp;
+                    <input type="checkbox" v-model="item.Status">
+                </li>
+            </ul>
+        </section>
+        <section v-show="disallow_to_show.length">
+            <h1>{{ title1 }}</h1>
+            <ul>
+                <li v-for="item in disallow_to_show" :key="item.id">
+                    <span>{{ item.id }}</span>&ensp;&ensp;
+                    <span>{{ item.name }}</span>&ensp;&ensp;
+                    <span><a :href="item.url">点击此处跳转</a></span>&ensp;&ensp;
+                    <span>地址：{{ item.url }}</span>&ensp;&ensp;
+                    <input type="checkbox" v-model="item.Status">
+                </li>
+            </ul>
+        </section>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    title: "这是可以播的",
+                    title1: "这是不好说的",
+                    content: [
+                        { id: 1, name: "百度", url: "https://www.baidu.com", Status: true },
+                        { id: 2, name: "搜狗", url: "https://www.sougou.com", Status: true },
+                        { id: 3, name: "谷歌", url: "https://www.google.com", Status: false },
+                        { id: 4, name: "pixiv", url: "https://www.pixiv.net", Status: false }
+                    ]
+                }
+            },
+            computed:{
+                allow_to_show(){
+                    return this.content.filter(item => item.Status);
+                },
+                disallow_to_show(){
+                    return this.content.filter(item => !item.Status);
+                },
+            }
+        }).mount('#app');  
+    </script>
+</body>
+
+</html>
